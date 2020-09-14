@@ -16,11 +16,11 @@ const StyledModeSelector = styled.div`
 const StyledSwitch = withStyles({
   track: {
     opacity: '1 !important',
-    backgroundColor: 'rgb(0, 191, 170) !important'
+    backgroundColor: 'rgb(0, 191, 170) !important',
   },
   thumb: {
-    backgroundColor: 'rgb(255, 255, 255)'
-  }
+    backgroundColor: 'rgb(255, 255, 255)',
+  },
 })(Switch);
 
 const ThemeSwitch: React.FC = () => {

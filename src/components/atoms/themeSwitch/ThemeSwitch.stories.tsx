@@ -7,4 +7,4 @@ export default {
   title: 'ThemeSwitch',
 };
 
-export const Default = () => <ThemeSwitch />;
+export const Default: React.SFC = () => <ThemeSwitch />;
