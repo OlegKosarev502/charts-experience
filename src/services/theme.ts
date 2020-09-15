@@ -1,22 +1,32 @@
 import { observable, action, computed } from 'mobx';
 
-export enum ThemeNames {
-  Light = 'light',
-  Dark = 'dark',
-}
+import { IThemeService, Theme, ThemeNames } from './theme.interfaces';
 
-class ThemeService {
+class ThemeService implements IThemeService {
+  private readonly themeNameKey: string = 'themeName';
+
   @observable
   public themeName: ThemeNames = ThemeNames.Light;
 
+  constructor() {
+    const savedTheme = this.getSavedTheme();
+
+    if (savedTheme) {
+      this.themeName = savedTheme as ThemeNames;
+    }
+  }
+
   @action.bound
-  public changeTheme() {
-    this.themeName =
+  public changeTheme(): void {
+    const themeName =
       this.themeName === ThemeNames.Light ? ThemeNames.Dark : ThemeNames.Light;
+
+    this.saveTheme(themeName);
+    this.themeName = themeName;
   }
 
   @computed
-  public get theme() {
+  public get theme(): Theme {
     return {
       colors: {
         background:
@@ -29,6 +39,14 @@ class ThemeService {
             : 'rgb(255, 255, 255)',
       },
     };
+  }
+
+  private getSavedTheme(): string | null {
+    return localStorage.getItem(this.themeNameKey);
+  }
+
+  private saveTheme(themeName: ThemeNames): void {
+    localStorage.setItem(this.themeNameKey, themeName);
   }
 }
 
