@@ -4,8 +4,8 @@ import Typography from '@material-ui/core/Typography';
 import Switch from '@material-ui/core/Switch';
 import { withStyles } from '@material-ui/core';
 
-import { themeService } from '../../../services/theme';
-import { ThemeNames } from '../../../services/theme.interfaces';
+import { themeService } from 'services/theme/theme';
+import { ThemeNames } from 'services/theme/theme.interfaces';
 
 const StyledModeSelector = styled.div`
   display: inline-grid;

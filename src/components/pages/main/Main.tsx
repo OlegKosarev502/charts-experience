@@ -1,16 +1,11 @@
 import React from 'react';
-import styled from 'styled-components';
+import Typography from '@material-ui/core/Typography';
 
-import ThemeSwitch from '../../atoms/themeSwitch/ThemeSwitch';
+import DefaultTemplate from 'components/templates/defaultPage/DefaultPage';
 
-const StyledMainPage = styled.div`
-  margin: 12px 0 0 12px;
-`;
-
-const MainPage: React.FC = () => (
-  <StyledMainPage>
-    <ThemeSwitch />
-  </StyledMainPage>
-);
+const MainPage: React.FC = () => {
+  const content = <Typography variant="h4">Main Page</Typography>;
+  return <DefaultTemplate content={content} />;
+};
 
 export default MainPage;
