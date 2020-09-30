@@ -3,12 +3,18 @@ import { ResponsiveBar } from '@nivo/bar';
 
 import { BarChartData } from './data';
 
+import ChartTooltip, {
+  Units,
+} from 'components/atoms/chartTooltip/ChartTooltip';
+
 const BarChart: React.FC = () => (
   <ResponsiveBar
+    layout="vertical"
     maxValue={100}
     data={BarChartData}
     keys={['Angular', 'React', 'Vue']}
     indexBy="framework"
+    enableLabel={false}
     margin={{ top: 25, right: 50, bottom: 100, left: 60 }}
     padding={0.3}
     colors={{ scheme: 'set1' }}
@@ -32,9 +38,6 @@ const BarChart: React.FC = () => (
       legendOffset: -42,
       format: (value) => `${value}%`,
     }}
-    labelSkipWidth={12}
-    labelSkipHeight={12}
-    labelTextColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
     legends={[
       {
         dataFrom: 'keys',
@@ -65,7 +68,21 @@ const BarChart: React.FC = () => (
     motionDamping={15}
     theme={{
       background: '#fff',
+      tooltip: {
+        container: {
+          borderRadius: 8,
+          background: 'rgb(32, 37, 45)',
+          color: 'rgb(255, 255, 255)',
+        },
+      },
     }}
+    tooltip={({ indexValue, value }) => (
+      <ChartTooltip
+        indexValue={indexValue}
+        value={value}
+        units={Units.Percentage}
+      />
+    )}
   />
 );
 
