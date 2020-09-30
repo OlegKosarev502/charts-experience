@@ -5,46 +5,13 @@ import { BarChartData } from './data';
 
 const BarChart: React.FC = () => (
   <ResponsiveBar
+    maxValue={100}
     data={BarChartData}
-    keys={['hot dog', 'burger', 'sandwich', 'kebab', 'fries', 'donut']}
-    indexBy="country"
+    keys={['Angular', 'React', 'Vue']}
+    indexBy="framework"
     margin={{ top: 25, right: 50, bottom: 100, left: 60 }}
     padding={0.3}
-    colors={{ scheme: 'nivo' }}
-    defs={[
-      {
-        id: 'dots',
-        type: 'patternDots',
-        background: 'inherit',
-        color: '#38bcb2',
-        size: 4,
-        padding: 1,
-        stagger: true,
-      },
-      {
-        id: 'lines',
-        type: 'patternLines',
-        background: 'inherit',
-        color: '#eed312',
-        rotation: -45,
-        lineWidth: 6,
-        spacing: 10,
-      },
-    ]}
-    fill={[
-      {
-        match: {
-          id: 'fries',
-        },
-        id: 'dots',
-      },
-      {
-        match: {
-          id: 'sandwich',
-        },
-        id: 'lines',
-      },
-    ]}
+    colors={{ scheme: 'set1' }}
     borderColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
     axisTop={null}
     axisRight={null}
@@ -52,17 +19,18 @@ const BarChart: React.FC = () => (
       tickSize: 5,
       tickPadding: 5,
       tickRotation: 0,
-      legend: 'Country',
+      legend: 'Framework',
       legendPosition: 'middle',
-      legendOffset: 32,
+      legendOffset: 48,
     }}
     axisLeft={{
-      tickSize: 5,
+      tickSize: 0,
       tickPadding: 5,
       tickRotation: 0,
-      legend: 'Food',
+      legend: 'Repos',
       legendPosition: 'middle',
-      legendOffset: -40,
+      legendOffset: -42,
+      format: (value) => `${value}%`,
     }}
     labelSkipWidth={12}
     labelSkipHeight={12}
