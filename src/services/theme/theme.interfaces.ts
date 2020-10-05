@@ -17,3 +17,5 @@ export interface IThemeService {
   themeName: ThemeNames;
   changeTheme(): void;
 }
+
+export const themeServiceToken = Symbol('ThemeService');

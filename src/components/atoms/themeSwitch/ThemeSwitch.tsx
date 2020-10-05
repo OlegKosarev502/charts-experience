@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import Typography from '@material-ui/core/Typography';
 import Switch from '@material-ui/core/Switch';
 import { withStyles } from '@material-ui/core';
 
-import { themeService } from 'services/theme/theme';
+import { container } from 'ioc.config';
+import {
+  IThemeService,
+  themeServiceToken,
+} from 'services/theme/theme.interfaces';
 import { ThemeNames } from 'services/theme/theme.interfaces';
 
 const StyledModeSelector = styled.div`
@@ -25,6 +29,10 @@ const StyledSwitch = withStyles({
 })(Switch);
 
 const ThemeSwitch: React.FC = () => {
+  const themeService = useMemo(
+    () => container.get<IThemeService>(themeServiceToken),
+    []
+  );
   const isChecked = themeService.themeName === ThemeNames.Dark;
 
   return (
