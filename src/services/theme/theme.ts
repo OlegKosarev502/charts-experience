@@ -1,8 +1,10 @@
+import { injectable } from 'inversify';
 import { observable, action, computed } from 'mobx';
 
 import { IThemeService, Theme, ThemeNames } from './theme.interfaces';
 
-class ThemeService implements IThemeService {
+@injectable()
+export class ThemeService implements IThemeService {
   private readonly themeNameKey: string = 'themeName';
 
   @observable
@@ -49,5 +51,3 @@ class ThemeService implements IThemeService {
     localStorage.setItem(this.themeNameKey, themeName);
   }
 }
-
-export const themeService = new ThemeService();
