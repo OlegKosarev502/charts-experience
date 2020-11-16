@@ -4,10 +4,14 @@ const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     padding: 0;
-    min-height: 100vh;
+    height: 100vh;
     background: ${(props) => props.theme.colors.background};
     color: ${(props) => props.theme.colors.text};
     transition: all .2s ease-in;
+  }
+
+  #root {
+    height: 100%;
   }
 `;
 
