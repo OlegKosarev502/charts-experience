@@ -29,14 +29,15 @@ const Form = styled.div`
 
 const Section = styled.div`
   display: grid;
-  grid-template-rows: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
   gap: 12px;
 `;
 
-const LoginPage: React.FC = observer(() => {
+const SignInPage: React.FC = observer(() => {
   const history = useHistory();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
@@ -45,14 +46,10 @@ const LoginPage: React.FC = observer(() => {
     []
   );
 
-  const logIn = async () => {
+  const signIn = async () => {
     setIsLoading(true);
-    await authService.logIn({ email, password });
-    history.push('/');
-  };
-
-  const signIn = () => {
-    history.push('/signin');
+    await authService.signIn({ name, email, password });
+    history.push('/login');
   };
 
   if (isLoading) {
@@ -72,6 +69,13 @@ const LoginPage: React.FC = observer(() => {
       <Form>
         <Section>
           <TextField
+            label="Name"
+            value={name}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              setName(event.target.value)
+            }
+          />
+          <TextField
             label="Email"
             value={email}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
@@ -89,17 +93,12 @@ const LoginPage: React.FC = observer(() => {
             autoComplete="password-2"
           />
         </Section>
-        <Section>
-          <Button variant="contained" color="primary" onClick={logIn}>
-            Log in
-          </Button>
-          <Button variant="contained" onClick={signIn}>
-            Sign in
-          </Button>
-        </Section>
+        <Button variant="contained" color="primary" onClick={signIn}>
+          Sign in
+        </Button>
       </Form>
     </FormContainer>
   );
 });
 
-export default LoginPage;
+export default SignInPage;

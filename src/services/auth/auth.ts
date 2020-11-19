@@ -1,55 +1,85 @@
-import { injectable } from 'inversify';
+import { injectable, inject } from 'inversify';
 import { observable, action, computed } from 'mobx';
 
-import { IAuthService } from 'services/auth/auth.interfaces';
-
-interface LoginInfo {
-  email: string;
-  password: string;
-}
+import {
+  IAuthService,
+  LoginInfo,
+  SignInInfo,
+} from 'services/auth/auth.interfaces';
+import {
+  IRequestService,
+  requestServiceToken,
+} from 'services/request/request.interfaces';
 
 @injectable()
 export class AuthService implements IAuthService {
-  private token: string | null = null;
+  private readonly requestService: IRequestService;
+
+  private readonly tokenKey: string = 'authToken';
 
   @observable
-  private isAuthenticationPassed = false;
+  public token: string | null = null;
+
+  constructor(@inject(requestServiceToken) requestService: IRequestService) {
+    this.requestService = requestService;
+
+    this.token = localStorage.getItem(this.tokenKey);
+  }
 
   @computed
   public get isAuthenticated(): boolean {
-    return this.isAuthenticationPassed;
-  }
-
-  @action
-  public setIsAuthenticated(value: boolean): void {
-    this.isAuthenticationPassed = value;
+    return Boolean(this.token);
   }
 
   private async sendLogInRequest(data: LoginInfo) {
-    const response = await fetch('http://localhost:5000/auth', {
+    return await this.requestService.sendRequest('http://localhost:5000/auth', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
     });
+  }
 
-    return response.json();
+  private async sendSignInRequest(data: SignInInfo) {
+    return await this.requestService.sendRequest(
+      'http://localhost:5000/users',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      }
+    );
   }
 
   @action
   public logIn(data: LoginInfo): Promise<unknown> {
     return new Promise((resolve) => {
-      this.sendLogInRequest(data).then((data) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      this.sendLogInRequest(data).then((data: any) => {
         const token = data.token;
 
         if (token) {
           this.token = token;
-          this.isAuthenticationPassed = true;
+          localStorage.setItem(this.tokenKey, token);
         }
 
         resolve();
       });
+    });
+  }
+
+  @action
+  public logOut = (): void => {
+    this.token = null;
+    localStorage.removeItem(this.tokenKey);
+  };
+
+  public signIn(data: SignInInfo): Promise<unknown> {
+    return new Promise((resolve) => {
+      this.sendSignInRequest(data).then(() => resolve());
     });
   }
 }
