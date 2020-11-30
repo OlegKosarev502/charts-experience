@@ -11,7 +11,7 @@ import {
 import GlobalStyle from 'globalStyles';
 import MainPageContainer from 'components/pages/main/Main.container';
 import LoginPage from 'components/pages/login/Login';
-import SignInPage from 'components/pages/signin/SignIn';
+import SignUpPage from 'components/pages/signup/SignUp';
 
 const App: React.FC = observer(() => {
   const themeService = useMemo(
@@ -25,7 +25,7 @@ const App: React.FC = observer(() => {
       <BrowserRouter>
         <Route exact path="/" component={MainPageContainer} />
         <Route path="/login" component={LoginPage} />
-        <Route path="/signin" component={SignInPage} />
+        <Route path="/signup" component={SignUpPage} />
       </BrowserRouter>
     </ThemeProvider>
   );

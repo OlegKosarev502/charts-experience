@@ -52,7 +52,7 @@ const LoginPage: React.FC = observer(() => {
   };
 
   const signIn = () => {
-    history.push('/signin');
+    history.push('/signup');
   };
 
   if (isLoading) {
@@ -94,7 +94,7 @@ const LoginPage: React.FC = observer(() => {
             Log in
           </Button>
           <Button variant="contained" onClick={signIn}>
-            Sign in
+            Sign up
           </Button>
         </Section>
       </Form>

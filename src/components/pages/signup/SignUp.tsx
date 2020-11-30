@@ -33,7 +33,7 @@ const Section = styled.div`
   gap: 12px;
 `;
 
-const SignInPage: React.FC = observer(() => {
+const SignUpPage: React.FC = observer(() => {
   const history = useHistory();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -46,9 +46,9 @@ const SignInPage: React.FC = observer(() => {
     []
   );
 
-  const signIn = async () => {
+  const signUp = async () => {
     setIsLoading(true);
-    await authService.signIn({ name, email, password });
+    await authService.signUp({ name, email, password });
     history.push('/login');
   };
 
@@ -93,12 +93,12 @@ const SignInPage: React.FC = observer(() => {
             autoComplete="password-2"
           />
         </Section>
-        <Button variant="contained" color="primary" onClick={signIn}>
-          Sign in
+        <Button variant="contained" color="primary" onClick={signUp}>
+          Sign up
         </Button>
       </Form>
     </FormContainer>
   );
 });
 
-export default SignInPage;
+export default SignUpPage;

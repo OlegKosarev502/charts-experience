@@ -4,7 +4,7 @@ import { observable, action, computed } from 'mobx';
 import {
   IAuthService,
   LoginInfo,
-  SignInInfo,
+  SignUpInfo,
 } from 'services/auth/auth.interfaces';
 import {
   IRequestService,
@@ -41,7 +41,7 @@ export class AuthService implements IAuthService {
     });
   }
 
-  private async sendSignInRequest(data: SignInInfo) {
+  private async sendSignUpRequest(data: SignUpInfo) {
     return await this.requestService.sendRequest(
       'http://localhost:5000/users',
       {
@@ -77,9 +77,9 @@ export class AuthService implements IAuthService {
     localStorage.removeItem(this.tokenKey);
   };
 
-  public signIn(data: SignInInfo): Promise<unknown> {
+  public signUp(data: SignUpInfo): Promise<unknown> {
     return new Promise((resolve) => {
-      this.sendSignInRequest(data).then(() => resolve());
+      this.sendSignUpRequest(data).then(() => resolve());
     });
   }
 }
