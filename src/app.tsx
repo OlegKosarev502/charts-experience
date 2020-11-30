@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { observer } from 'mobx-react-lite';
+import { BrowserRouter, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
 import { container } from 'ioc.config';
@@ -8,7 +9,9 @@ import {
   themeServiceToken,
 } from 'services/theme/theme.interfaces';
 import GlobalStyle from 'globalStyles';
-import MainPage from 'components/pages/main/Main';
+import MainPageContainer from 'components/pages/main/Main.container';
+import LoginPage from 'components/pages/login/Login';
+import SignUpPage from 'components/pages/signup/SignUp';
 
 const App: React.FC = observer(() => {
   const themeService = useMemo(
@@ -19,7 +22,11 @@ const App: React.FC = observer(() => {
   return (
     <ThemeProvider theme={themeService.theme}>
       <GlobalStyle />
-      <MainPage />
+      <BrowserRouter>
+        <Route exact path="/" component={MainPageContainer} />
+        <Route path="/login" component={LoginPage} />
+        <Route path="/signup" component={SignUpPage} />
+      </BrowserRouter>
     </ThemeProvider>
   );
 });
